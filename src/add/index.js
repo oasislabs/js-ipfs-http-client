@@ -40,15 +40,16 @@ module.exports = configure(({ ky }) => {
       body: await toFormData(input)
     })
 
-    for await (let file of ndjson(toIterable(res.body))) {
-      file = toCamel(file)
-      // console.log(file)
-      if (options.progress && file.bytes) {
-        options.progress(file.bytes)
-      } else {
-        yield toCoreInterface(file)
-      }
-    }
+    yield toCoreInterface(await res.json());
+    // for await (let file of ndjson(toIterable(res.body))) {
+    //   file = toCamel(file)
+    //   // console.log(file)
+    //   if (options.progress && file.bytes) {
+    //     options.progress(file.bytes)
+    //   } else {
+    //     yield toCoreInterface(file)
+    //   }
+    // }
   }
 })
 

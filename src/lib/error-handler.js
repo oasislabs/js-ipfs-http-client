@@ -18,7 +18,9 @@ module.exports = async function errorHandler (input, options, response) {
     //
     // If the body in the clone is not consumed or destroyed the highwater mark
     // will be reached (for large payloads) and stop the real body from flowing.
-    if (isNode || isElectronMain) response.body.destroy()
+    if ((isNode || isElectronMain) && typeof response.body !== 'undefined') {
+      response.body.destroy()
+    }
     return
   }
 
